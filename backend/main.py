@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from supabase import create_client
 from dotenv import load_dotenv
 import os
@@ -8,6 +9,14 @@ load_dotenv()
 
 # Create FastAPI application
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=False,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # Get Supabase credentials
 SUPABASE_URL = os.getenv("SUPABASE_URL")
