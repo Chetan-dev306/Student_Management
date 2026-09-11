@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Student Management System</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+</head>
+
+<body>
+
+    <!-- =========================
+         SIDEBAR
+    ========================== -->
+
+    <aside class="sidebar">
+
+        <div class="logo">
+            <div class="logo-icon">🎓</div>
+
+            <div>
+                <h2>Student</h2>
+                <span>Management</span>
+            </div>
+        </div>
+
+        <nav>
+
+            <a href="#" class="nav-item active" onclick="showSection('dashboard')">
+                <span>📊</span>
+                Dashboard
+            </a>
+
+            <a href="#" class="nav-item" onclick="showSection('students')">
+                <span>👨‍🎓</span>
+                Students
+            </a>
+
+            <a href="#" class="nav-item" onclick="openAddModal()">
+                <span>➕</span>
+                Add Student
+            </a>
+
+        </nav>
+
+        <div class="sidebar-footer">
+            <p>Student Management</p>
+            <small>FastAPI + Supabase</small>
+        </div>
+
+    </aside>
+
+
+    <!-- =========================
+         MAIN CONTENT
+    ========================== -->
+
+    <main class="main-content">
+
+        <!-- TOP BAR -->
+
+        <header class="topbar">
+
+            <div>
+                <h1 id="page-title">Dashboard</h1>
+
+                <p>
+                    Manage your students efficiently
+                </p>
+            </div>
+
+            <button class="add-btn" onclick="openAddModal()">
+                + Add Student
+            </button>
+
+        </header>
+
+
+        <!-- =========================
+             DASHBOARD
+        ========================== -->
+
+        <section id="dashboard" class="section active-section">
+
+            <!-- STATISTICS -->
+
+            <div class="stats-grid">
+
+                <div class="stat-card">
+
+                    <div class="stat-icon blue">
+                        👨‍🎓
+                    </div>
+
+                    <div>
+                        <p>Total Students</p>
+                        <h2 id="totalStudents">0</h2>
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon green">
+                        📈
+                    </div>
+
+                    <div>
+                        <p>Average Marks</p>
+                        <h2 id="averageMarks">0</h2>
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon purple">
+                        🏆
+                    </div>
+
+                    <div>
+                        <p>Highest Marks</p>
+                        <h2 id="highestMarks">0</h2>
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon orange">
+                        📚
+                    </div>
+
+                    <div>
+                        <p>Total Courses</p>
+                        <h2 id="totalCourses">0</h2>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- RECENT STUDENTS -->
+
+            <div class="content-card">
+
+                <div class="card-header">
+
+                    <div>
+                        <h2>Recent Students</h2>
+
+                        <p>
+                            Latest student records
+                        </p>
+                    </div>
+
+                    <button
+                        class="secondary-btn"
+                        onclick="loadStudents()"
+                    >
+                        ↻ Refresh
+                    </button>
+
+                </div>
+
+
+                <div class="table-container">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+                                <th>ID</th>
+                                <th>Student</th>
+                                <th>Course</th>
+                                <th>Marks</th>
+                                <th>Performance</th>
+                                <th>Actions</th>
+                            </tr>
+
+                        </thead>
+
+                        <tbody id="studentTableBody">
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             STUDENTS SECTION
+        ========================== -->
+
+        <section id="students" class="section">
+
+            <div class="content-card">
+
+                <div class="card-header">
+
+                    <div>
+                        <h2>All Students</h2>
+
+                        <p>
+                            Manage all student records
+                        </p>
+                    </div>
+
+                    <button
+                        class="secondary-btn"
+                        onclick="loadStudents()"
+                    >
+                        ↻ Refresh
+                    </button>
+
+                </div>
+
+
+                <!-- SEARCH -->
+
+                <div class="search-container">
+
+                    <input
+                        type="text"
+                        id="searchInput"
+                        placeholder="🔍 Search by name or course..."
+                        oninput="searchStudents()"
+                    >
+
+                </div>
+
+
+                <!-- TABLE -->
+
+                <div class="table-container">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+                                <th>ID</th>
+                                <th>Student</th>
+                                <th>Course</th>
+                                <th>Marks</th>
+                                <th>Performance</th>
+                                <th>Actions</th>
+                            </tr>
+
+                        </thead>
+
+                        <tbody id="allStudentTableBody">
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- =========================
+         ADD STUDENT MODAL
+    ========================== -->
+
+    <div id="addModal" class="modal">
+
+        <div class="modal-content">
+
+            <div class="modal-header">
+
+                <div>
+                    <h2>Add New Student</h2>
+
+                    <p>
+                        Enter student information
+                    </p>
+                </div>
+
+                <button
+                    class="close-btn"
+                    onclick="closeAddModal()"
+                >
+                    ×
+                </button>
+
+            </div>
+
+
+            <form id="addStudentForm">
+
+                <div class="form-group">
+
+                    <label>
+                        Student Name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="studentName"
+                        placeholder="Enter student name"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Course
+                    </label>
+
+                    <input
+                        type="text"
+                        id="studentCourse"
+                        placeholder="Enter course"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Marks
+                    </label>
+
+                    <input
+                        type="number"
+                        id="studentMarks"
+                        placeholder="Enter marks"
+                        min="0"
+                        max="100"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-actions">
+
+                    <button
+                        type="button"
+                        class="cancel-btn"
+                        onclick="closeAddModal()"
+                    >
+                        Cancel
+                    </button>
+
+                    <button
+                        type="submit"
+                        class="save-btn"
+                    >
+                        Add Student
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         EDIT STUDENT MODAL
+    ========================== -->
+
+    <div id="editModal" class="modal">
+
+        <div class="modal-content">
+
+            <div class="modal-header">
+
+                <div>
+                    <h2>Update Student</h2>
+
+                    <p>
+                        Update student marks
+                    </p>
+                </div>
+
+                <button
+                    class="close-btn"
+                    onclick="closeEditModal()"
+                >
+                    ×
+                </button>
+
+            </div>
+
+
+            <form id="editStudentForm">
+
+                <input
+                    type="hidden"
+                    id="editStudentId"
+                >
+
+
+                <div class="form-group">
+
+                    <label>
+                        Student ID
+                    </label>
+
+                    <input
+                        type="text"
+                        id="editStudentIdDisplay"
+                        disabled
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        New Marks
+                    </label>
+
+                    <input
+                        type="number"
+                        id="editStudentMarks"
+                        min="0"
+                        max="100"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-actions">
+
+                    <button
+                        type="button"
+                        class="cancel-btn"
+                        onclick="closeEditModal()"
+                    >
+                        Cancel
+                    </button>
+
+                    <button
+                        type="submit"
+                        class="save-btn"
+                    >
+                        Save Changes
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         TOAST
+    ========================== -->
+
+    <div id="toast" class="toast">
+        <span id="toastMessage"></span>
+    </div>
+
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
