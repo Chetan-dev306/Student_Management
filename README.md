@@ -1,56 +1,74 @@
 # 🎓 Student Management System
 
-A full-stack Student Management System built using **Python, FastAPI, Gradio, and Supabase**.
+A full-stack Student Management System built using **FastAPI, Supabase, HTML, CSS, and JavaScript**.
 
-The application provides a simple web interface for managing student records and a REST API for performing CRUD operations.
-
----
-
-## 🚀 Features
-
-- ✅ Add new students
-- ✅ View all students
-- ✅ Find a student by ID
-- ✅ Update student marks
-- ✅ Delete students
-- ✅ REST API using FastAPI
-- ✅ Interactive API documentation with Swagger
-- ✅ Supabase PostgreSQL database
-- ✅ Gradio-based web interface
-- ✅ Environment variables for secure database configuration
+The application allows users to manage student records and perform CRUD operations through a simple and modern web dashboard.
 
 ---
 
-## 🛠️ Technologies Used
+## 🚀 Live Application
 
-| Technology | Purpose |
-|---|---|
-| Python | Programming Language |
-| FastAPI | Backend REST API |
-| Gradio | Frontend Web Interface |
-| Supabase | Database and Backend Services |
-| PostgreSQL | Database |
-| Requests | API communication |
-| Uvicorn | FastAPI Server |
-| python-dotenv | Environment variable management |
+### Frontend
+https://student-management-app-two-theta.vercel.app/
+
+### Backend API
+https://student-management-5sgq.onrender.com
+
+### GitHub Repository
+https://github.com/Chetan-dev306/Student_Management
 
 ---
 
-## 📂 Project Structure
+## 📌 Project Overview
+
+The Student Management System is a full-stack web application designed to manage student information efficiently.
+
+The system provides:
+
+- Add new students
+- View all students
+- View individual student details
+- Update student marks
+- Delete student records
+- Search students
+- Calculate student statistics
+- Display average marks
+- Display highest marks
+- Display total courses
+- Modern dashboard interface
+
+The frontend communicates with a REST API developed using FastAPI, while student data is stored in Supabase.
+
+---
+
+## Screenshots
+
+### Dashboard
+
+![Dashboard](./Screenshot/Dashboard.png)
+
+## Student
+![Student](./Screenshot/Student.png)
+
+
+## 🏗️ System Architecture
 
 ```text
-StudentManagement/
-│
-├── backend/
-│   └── main.py
-│
-├── frontend/
-│   └── app.py
-│
-├── screenshots/
-│   ├── dashboard.png
-│  
-│
-├── requirements.txt
-├── .gitignore
-└── README.md
+                    ┌─────────────────────────┐
+                    │      Web Browser        │
+                    │  HTML + CSS + JavaScript│
+                    └────────────┬────────────┘
+                                 │
+                                 │ HTTP Requests
+                                 ▼
+                    ┌─────────────────────────┐
+                    │      FastAPI Backend    │
+                    │       REST API          │
+                    └────────────┬────────────┘
+                                 │
+                                 │ Database Queries
+                                 ▼
+                    ┌─────────────────────────┐
+                    │        Supabase         │
+                    │       PostgreSQL        │
+                    └─────────────────────────┘
